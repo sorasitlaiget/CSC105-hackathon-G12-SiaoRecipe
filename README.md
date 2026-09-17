@@ -49,3 +49,39 @@ model Like {
 
   @@unique([userId, recipeId])
 }
+2. Referential Integrity & Cascade Deletes
+Configured onDelete: Cascade across all relational foreign keys (User -> Recipes, Recipe -> Comments, Recipe -> Likes).
+Deleting a recipe or user automatically purges orphaned comments and reactions without orphaned database records.
+3. Enum Taxonomies for Sentiments
+Replaced arbitrary string tags with fixed database enum taxonomies to keep search filtering fast and consistent across endpoints.
+Project Structure
+Plaintext
+siaorecipe/
+├── client/                 # React Frontend
+│   ├── src/
+│   │   ├── components/     # RecipeCard, CommentSection, EmotionFilter
+│   │   ├── pages/          # Feed, CreateRecipe, RecipeDetail
+│   │   └── services/       # Axios / Fetch API client
+├── server/                 # Node.js REST API
+│   ├── prisma/
+│   │   └── schema.prisma   # Data models, constraints, and enums
+│   ├── routes/             # Express API endpoints (/recipes, /likes, /comments)
+│   ├── controllers/        # Business logic & Prisma query executions
+│   └── index.js            # Server entry point
+└── package.json
+Getting Started
+1. Clone the repository
+Bash
+git clone [https://github.com/sorasitlaiget/siaorecipe.git](https://github.com/sorasitlaiget/siaorecipe.git)
+cd siaorecipe
+2. Backend Setup
+Bash
+cd server
+npm install
+npx prisma migrate dev --name init
+npm run dev
+3. Frontend Setup
+Bash
+cd ../client
+npm install
+npm start
